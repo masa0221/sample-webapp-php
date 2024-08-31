@@ -1,0 +1,44 @@
+name: Lint check and E2E test
+run-name: Lint check and E2E test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  lint-and-e2e-test:
+    name: Lint Check and E2E test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create build driver # to use bake
+        run: docker buildx create --use
+
+      - name: Build image
+        uses: docker/bake-action@master
+        with:
+          push: false
+          load: true
+          set: |
+            *.platform=linux/amd64
+            *.cache-from=type=gha
+            *.cache-to=type=gha
+
+      - name: Up docker containers
+        run: docker compose up -d
+        shell: bash
+
+      - name: Run lint check
+        run: ./tools/lint-check.sh
+        shell: bash
+
+      - name: Run E2E test
+        run: ./tools/test.sh
+        shell: bash
+
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 5

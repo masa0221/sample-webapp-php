@@ -1,0 +1,14 @@
+.git/
+.github/
+.gitignore
+.dockerignore
+Dockerfile*
+tools/
+compose.yaml
+README.md
+
+# editor
+.vscode/
+.idea/
+*.swp
+
