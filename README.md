@@ -124,3 +124,7 @@ docker compose down
 ## Kubernetes で動かす場合
 以下を参照してください。  
 [https://github.com/masa0221/sample-webapp-php-manifests](https://github.com/masa0221/sample-webapp-php-manifests)
+
+
+## LICENSE
+MIT
