@@ -127,4 +127,4 @@ docker compose down
 
 
 ## LICENSE
-MIT
+Apache License 2.0
