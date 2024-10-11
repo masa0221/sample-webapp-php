@@ -50,7 +50,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3306"]
       interval: 10s
       timeout: 1s
       retries: 5
