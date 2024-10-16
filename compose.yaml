@@ -30,7 +30,7 @@ services:
       DB_USER: user
       DB_PASS: password
     healthcheck:
-      test: ["CMD", "sh", "-c", "netstat -ax | grep LISTENING | grep php-fpm.sock || exit 1"]
+      test: ["CMD", "sh", "-c", "netstat -lx | grep php-fpm.sock || exit 1"]
       interval: 10s
       timeout: 10s
       retries: 3
