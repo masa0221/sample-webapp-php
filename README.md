@@ -1,6 +1,8 @@
 # nginx + php-fpm + mysql の webアプリ
 コンテナで動くサンプル用のWebアプリケーションです。
 
+![screen-shot](./docs/images/screen-shot.png)
+
 ```
 +-----------+      +-----------+      +---------+ 
 | webserver | <--> |    app    | <--> |   db    | 
