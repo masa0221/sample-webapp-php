@@ -13,18 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create build driver # to use bake
-        run: docker buildx create --use
-
       - name: Build image
-        uses: docker/bake-action@master
-        with:
-          push: false
-          load: true
-          set: |
-            *.platform=linux/amd64
-            *.cache-from=type=gha
-            *.cache-to=type=gha
+        uses: ./.github/actions/build-image
 
       - name: Up docker containers
         run: docker compose up -d
@@ -38,7 +28,7 @@ jobs:
         run: ./tools/test.sh
         shell: bash
 
-      - name: Setup tmate session
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 5
+      # - name: Setup tmate session
+      #   if: ${{ failure() }}
+      #   uses: mxschmitt/action-tmate@v3
+      #   timeout-minutes: 5
