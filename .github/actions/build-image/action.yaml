@@ -71,5 +71,6 @@ runs:
           webserver.cache-from=type=local,src=/tmp/.buildx-cache/webapp-nginx
           webserver.cache-to=type=local,dest=/tmp/.buildx-cache/webapp-nginx,mode=max
       env:
-        REGISTRY_HOST: ${{ inputs.AWS_REGISTRY }}
-        TAG: ${{ inputs.IMAGE_TAG }}
+        DOCKER_BUILD_RECORD_UPLOAD: false            # to use in docker/bake-action
+        REGISTRY_HOST: ${{ inputs.AWS_REGISTRY }}    # to use in compose.yaml
+        TAG: ${{ inputs.IMAGE_TAG }}                 # to use in compose.yaml
