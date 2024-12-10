@@ -66,23 +66,20 @@ jobs:
       - set-vars
       - build-and-push-image
 
-    env:
-      MANIFESTS_REPO: webapp-sample-php-manifests
-
     steps:
       - name: Generate GitHub Apps token
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
-          app-id: ${{ secrets.AUTO_MERGE_BOT_APP_ID }}
-          private-key: ${{ secrets.AUTO_MERGE_BOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.DEPLOY_PIPELINE_APP_ID }}
+          private-key: ${{ secrets.DEPLOY_PIPELINE_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          repositories: ${{ env.MANIFESTS_REPO }}
+          repositories: ${{ vars.MANIFESTS_REPO }}
           
       - name: Run a workflow to replace the image tag in the manifests repository
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           gh workflow run replace-image-tag.yaml \
-            --repo ${{ github.repository_owner }}/${{ env.MANIFESTS_REPO }} \
+            --repo ${{ github.repository_owner }}/${{ vars.MANIFESTS_REPO }} \
             -f tag=${{ needs.set-vars.outputs.tag }}
