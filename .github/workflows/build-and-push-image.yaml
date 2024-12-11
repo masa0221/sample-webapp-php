@@ -26,13 +26,16 @@ jobs:
         id: set-vars
         # Configuration for the set-vars job to produce "${{ steps.set-vars.outputs.tag }}"
         run: |
+          tag=""
           if [ "${{ github.event_name }}" == "push" ]; then
             tag=${GITHUB_REF#refs/tags/}
-            echo "tag=${tag}" >> $GITHUB_OUTPUT
           elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             tag=${{ inputs.tag }}
-            echo "tag=${{ inputs.tag }}" >> $GITHUB_OUTPUT
+          else
+            echo "Error: Unsupported event_name '${{ github.event_name }}'" >&2
+            exit 1
           fi
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
           echo "tag=${tag}"
 
   build-and-push-image:
