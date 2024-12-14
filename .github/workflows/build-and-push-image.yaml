@@ -81,7 +81,7 @@ jobs:
           
       - name: Run a workflow to replace the image tag in the manifests repository
         env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           gh workflow run replace-image-tag.yaml \
             --repo ${{ github.repository_owner }}/${{ vars.MANIFESTS_REPO }} \
